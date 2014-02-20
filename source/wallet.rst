@@ -99,10 +99,6 @@ Bitcoin地址实质上是一对公私钥（参考 ECDSA）当中的公钥
 
   17FyT8NYV4Wf1DxrviCkpvVZ7i7bXx4rrx (压缩Public Key：03BAEC0655BAF2851E271553AB0F4DDAB793FD0CCC587F41E03D07186DB54C521B)
 
-  -------------------------------
-  |ver|
-  -------------------------------
-
   https://en.bitcoin.it/wiki/List_of_address_prefixes
 
   https://en.bitcoin.it/wiki/Bitcoin_address
@@ -567,6 +563,3 @@ A. keypool=100
    https://bitcointalk.org/index.php?topic=5324.20
  
 
-Q. wallet recovery 过程?
-
-Q:最小交易费提高后, 这种计算方方式怎么区别提高前与提高后的交易费?
