@@ -1,0 +1,3 @@
+build/
+.*.sw*
+source/.*.sw*

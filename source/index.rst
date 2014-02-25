@@ -5,5 +5,6 @@ XCOIN tech 研究
    :maxdepth: 1
 
    wallet
-
+   msc
+   fee
 

@@ -530,6 +530,10 @@ getbalance() 遍历所有wallet里的交易，分为sent 和received两个列表
 
 余额 =  sum(TxOutToMe) - Sum(TxOutToOther) - fee
 
+http://bitcoin.stackexchange.com/questions/10090/how-to-get-an-addresss-balance-with-the-bitcoin-client
+
+http://bitcoinmagazine.com/4465/bitcoin-developers-adding-0-007-minimum-transaction-output-size/
+
 小技巧
 -------------------
 If you need to give someone, say, 5 BTC as a birthday gift, you:
@@ -539,6 +543,9 @@ If you need to give someone, say, 5 BTC as a birthday gift, you:
 - Export (possibly with delete) the key from wallet
 - Convert exported key to a QR code
 - print the code on a postcard
+
+余额合并
+https://www.wpsoftware.net/coinjoin/
 
 QA
 -------------------
