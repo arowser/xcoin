@@ -91,9 +91,10 @@ Bitcoin地址实质上是一对公私钥（参考 ECDSA）当中的公钥
 --------------------------------
   地址数目大于2^160(目前应该是2*62^33,最多应该是62^34-无效地址, 按https://en.bitcoin.it/wiki/Address算法，有效地址应该是4.29bill里有一个，大概应该是2^32有一个，所以最后有效数目大约是2^196)
 
-  比特币地址开头为1
+  比特币地址开头为1, 这个开头定义在的Base58.h的PUBKEY_ADDRESS，比特币定义为0，经过base58编码后对应开头为1，litecoin定义为48对应为L,定义与显示的对应关系可以查找https://en.bitcoin.it/wiki/List_of_address_prefixes
 
-  长度为34个字符,但这个不一定，理论上可能会到27个，使用Public Key（压缩或者非压缩）生成,比如：
+
+  比特币地址长度为34个字符,但这个不一定，理论上可能会到27个，使用Public Key（压缩或者非压缩）生成,比如：
 
   15atBQgsbyhr7BQtUMjwdEXSHNgbthydR1 (非压缩Public Key：04BAEC0655BAF2851E271553AB0F4DDAB793FD0CCC587F41E03D07186DB54C521B7AEB90426C719ACE734BB4957C72777610D36F22DF5F660B1DD7CBBD7594B13B) 
 
@@ -106,7 +107,6 @@ Bitcoin地址实质上是一对公私钥（参考 ECDSA）当中的公钥
 
 **Bitcoin地址计算过程**:
 ------------------------------------
-  只包含0-9,A-F字符,分为缩和非压缩格式, 压缩格式33字节,以0x2或者0x3开头，非压缩65字节,以0x4开头,以04 <x> <y>的形式给出，x和y是表示曲线上点的坐标的32字节字符串, 最新版本默认使用压缩格式
 
   1. 产生ECDSA私钥，私钥是一个随机整数，公钥是私钥与基点的乘积,公钥产生后会有可靠性验证，防止攻击者利用性质较差的公钥进行攻击,避免偶然的编码或传输错误。使用性质较差的公钥会使其他安全措施无效(椭圆曲线数字签名算法（ECDSA）http://blog.sina.com.cn/s/blog_4e37c87d0100cuo0.html)如：
 
@@ -115,6 +115,8 @@ Bitcoin地址实质上是一对公私钥（参考 ECDSA）当中的公钥
   2. 计算出ECDSA公钥，
 
      0450863AD64A87AE8A2FE8….82BA6
+
+     public key只包含0-9,A-F字符,分为缩和非压缩格式, 压缩格式33字节,以0x2或者0x3开头，非压缩65字节,以0x4开头,以04 <x> <y>的形式给出，x和y是表示曲线上点的坐标的32字节字符串, 最新版本默认使用压缩格式
 
   3. 对公钥进行SHA256运算
 
@@ -402,6 +404,9 @@ https://en.bitcoin.it/wiki/Wallet_encryption
 private key 加密
 Wallet encryption uses AES-256-CBC to encrypt only the private keys.
 
+钱包加密后, private key将以加密方式存储，每次使用的时候必须输入密码，解密的key不会在内存中缓存，除非你用命令
+walletpassphrase <passphrase> <timeout> 
+
 https://en.bitcoin.it/wiki/Wallet_encryption
 
 钱包解密服务
@@ -423,7 +428,8 @@ http://xingfeng.org/?p=5
 
 * 找零机制：
 
-为了保证隐私（匿名性）, 许多客户端默认设置（Armory, Electrum）每转出一笔钱就把剩下的自动转移到钱包里面新的一个地址名下
+为了保证隐私（匿名性）, 许多客户端默认设置（Bitcoin, Armory, Electrum）每转出一笔钱就把剩下的自动转移到钱包里面新的一个地址名下
+默认wallet.dat保留了100个地址，所以如果你备份后,进行了超过100次交易，然后恢复备份，有可能会丢币.
 
 * 导入导出
 
@@ -521,6 +527,7 @@ bitcoind -rpcpassword=xxxxxxxxxx sendtoaddress address 0.001
 
 余额计算
 -------------------
+注意通常来说，钱包里的余额并不在同一个地址
 
 计算方式1:
  Cwallet::getbalance() 遍历 wallet 里的交易，累计每一笔没有标记为spent的out
