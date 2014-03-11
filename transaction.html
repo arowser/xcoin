@@ -1,0 +1,136 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>交易 &mdash; xcoin  documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="xcoin  documentation" href="index.html" />
+    <link rel="next" title="脚本" href="script.html" />
+    <link rel="prev" title="交易费计算" href="fee.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="script.html" title="脚本"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fee.html" title="交易费计算"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">xcoin  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>交易<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>交易在kevin的blog(618.io)中有很详细的描述.</p>
+<p>standard transaction types
+raw m-of-n where n&lt;=3, p2sh, p2pkh, p2pk</p>
+<p>p2sh: Pay To Script Hash
+p2pkh: pay-to-pubkey-hash
+p2pk:  pay-to-pubkey
+m-of-n:
+multisig:
+nulldata:
+nostand:</p>
+<p>比特币交易构成（一）</p>
+<p><a class="reference external" href="http://618.io/blog/2013/10/27/bitcoin-transaction-01/">http://618.io/blog/2013/10/27/bitcoin-transaction-01/</a></p>
+<p>比特币交易构成（二）</p>
+<p><a class="reference external" href="http://618.io/blog/2013/10/27/bitcoin-transaction-02/">http://618.io/blog/2013/10/27/bitcoin-transaction-02/</a></p>
+<p>Send coins to a 2-of-3 multisig, then spend them</p>
+<p><a class="reference external" href="https://gist.github.com/gavinandresen/3966071">https://gist.github.com/gavinandresen/3966071</a></p>
+<p>multisig example</p>
+<p><a class="reference external" href="https://blockchain.info/tx/7b80040a18c70f279ac32c7032e69c46aff50ee76398df7babf6f9039ed2561d">https://blockchain.info/tx/7b80040a18c70f279ac32c7032e69c46aff50ee76398df7babf6f9039ed2561d</a></p>
+<p>P2SH Safe Addresses
+<a class="reference external" href="https://www.belshe.com/2013/12/15/p2sh-safe-addresses/">https://www.belshe.com/2013/12/15/p2sh-safe-addresses/</a></p>
+<p>交易的可锻性（transaction malleability）
+由于现在大部分使用的签名算法都是基于OpenSSL的ECDSA（椭圆曲线数字签名），这个签名算法的一个问题就是，修改签名的某个字节能够使得签名依然校验成功，这样伪造签名之后交易依然能成功进行。</p>
+<p><a class="reference external" href="https://en.bitcoin.it/wiki/Transaction_Malleability">https://en.bitcoin.it/wiki/Transaction_Malleability</a></p>
+<p>改进方法</p>
+<p><a class="reference external" href="https://gist.github.com/sipa/8907691">https://gist.github.com/sipa/8907691</a></p>
+<p>最近的 Mt.Gox 停止比特币提现是怎么回事？比特币安全性究竟怎样?</p>
+<p><a class="reference external" href="http://www.zhihu.com/question/22787360/answer/22658207">http://www.zhihu.com/question/22787360/answer/22658207</a></p>
+<p><a class="reference external" href="http://bitcoinhistory.net/Technical_Papers/ProgrammingBitcoinTransactionScripts.pdf">http://bitcoinhistory.net/Technical_Papers/ProgrammingBitcoinTransactionScripts.pdf</a></p>
+<p>offline  translactions use with original bitcoin client</p>
+<p><a class="reference external" href="https://people.xiph.org/~greg/signdemo.txt">https://people.xiph.org/~greg/signdemo.txt</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fee.html"
+                        title="previous chapter">交易费计算</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="script.html"
+                        title="next chapter">脚本</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="script.html" title="脚本"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fee.html" title="交易费计算"
+             >previous</a> |</li>
+        <li><a href="index.html">xcoin  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, arowser.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>交易费计算 &mdash; xcoin  documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="xcoin  documentation" href="index.html" />
+    <link rel="next" title="交易" href="transaction.html" />
+    <link rel="prev" title="钱包" href="wallet.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="transaction.html" title="交易"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="wallet.html" title="钱包"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">xcoin  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>交易费计算<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>交易其实是按字节数量收费</p>
+<p>币龄</p>
+<p>优先级</p>
+<p>交易费</p>
+<p>免费</p>
+<div class="section" id="id2">
+<h2>0.9<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>每千字节 0.00001btc(0.01mbtc)</p>
+<p><a class="reference external" href="https://github.com/bitcoin/bitcoin/pull/3305">https://github.com/bitcoin/bitcoin/pull/3305</a></p>
+</div>
+<div class="section" id="id3">
+<h2>0.8.6<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id4">
+<h2>0.8.5<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>一个交易可以被免费地发送，如果同时满足这些条件：
+小于1,000字节。
+所有输出大于等于0.01 BTC。
+它的优先级是足够高</p>
+<p>收费</p>
+<p>每千字节 0.0001btc(0.1mbtc)</p>
+<p>计算优先级</p>
+<p>优先级就是币的sum(bestheight-height)/bytes</p>
+<dl class="docutils">
+<dt>免费</dt>
+<dd>优先级&gt; COIN*144/250</dd>
+</dl>
+<ul class="simple">
+<li>手续费 fee = Sum(TxIn) - Sum(TxOut)</li>
+</ul>
+<p>默认交易费
+1.可以修改，在conf...</p>
+</div>
+<div class="section" id="id5">
+<h2>交易费的演进:<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://gist.github.com/gavinandresen/7670433">https://gist.github.com/gavinandresen/7670433</a></p>
+</div>
+<div class="section" id="id6">
+<h2>参考<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://en.bitcoin.it/wiki/Transaction_fees">https://en.bitcoin.it/wiki/Transaction_fees</a></p>
+<p><a class="reference external" href="https://en.bitcoin.it/wiki/Free_transaction_relay_policy">https://en.bitcoin.it/wiki/Free_transaction_relay_policy</a></p>
+<p><a class="reference external" href="http://bitcoin.stackexchange.com/questions/3400/what-is-the-exact-formula-for-calculating-transaction-fees">http://bitcoin.stackexchange.com/questions/3400/what-is-the-exact-formula-for-calculating-transaction-fees</a></p>
+<p><a class="reference external" href="http://bitcoin.stackexchange.com/questions/7537/calculator-for-estimated-tx-fees">http://bitcoin.stackexchange.com/questions/7537/calculator-for-estimated-tx-fees</a></p>
+<p><a class="reference external" href="http://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending">http://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending</a></p>
+<p><a class="reference external" href="http://bitcoinfees.com/">http://bitcoinfees.com/</a></p>
+<p><a class="reference external" href="https://github.com/bitcoin/bitcoin/commits/master/src/wallet.cpp?page=7">https://github.com/bitcoin/bitcoin/commits/master/src/wallet.cpp?page=7</a></p>
+<p><a class="reference external" href="http://jingyan.baidu.com/article/fdbd427702508db89e3f48df.html">http://jingyan.baidu.com/article/fdbd427702508db89e3f48df.html</a></p>
+</div>
+<div class="section" id="id7">
+<h2>增加交易费，如何加快交易速度<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>标准bitcoin网络在创建block的时候会把所有不在block交易按优先级排序，先放入优先级高的</p>
+<p>交易被发送后，保存在矿工的内存中，矿工创建block再广播出去，达到6个confirms,认为交易成功</p>
+<ol class="upperalpha simple" start="17">
+<li>非标准bitcoin client，如矿池创建的block，不按规则创建，如何检查？</li>
+</ol>
+<p>必须满足checkblock, checktranslaction,否则会被丢弃</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">交易费计算</a><ul>
+<li><a class="reference internal" href="#id2">0.9</a></li>
+<li><a class="reference internal" href="#id3">0.8.6</a></li>
+<li><a class="reference internal" href="#id4">0.8.5</a></li>
+<li><a class="reference internal" href="#id5">交易费的演进:</a></li>
+<li><a class="reference internal" href="#id6">参考</a></li>
+<li><a class="reference internal" href="#id7">增加交易费，如何加快交易速度</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="wallet.html"
+                        title="previous chapter">钱包</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="transaction.html"
+                        title="next chapter">交易</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="transaction.html" title="交易"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="wallet.html" title="钱包"
+             >previous</a> |</li>
+        <li><a href="index.html">xcoin  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, arowser.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

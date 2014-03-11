@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="xcoin  documentation" href="index.html" />
+    <link rel="next" title="交易费计算" href="fee.html" />
     <link rel="prev" title="XCOIN tech 研究" href="index.html" /> 
   </head>
   <body>
@@ -34,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="fee.html" title="交易费计算"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="XCOIN tech 研究"
              accesskey="P">previous</a> |</li>
@@ -132,8 +136,8 @@ Public Key (compressed, 66 characters [0-9A-F]):</div></blockquote>
 <h2><strong>比特币地址</strong>:<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>地址数目大于2^160(目前应该是2*62^33,最多应该是62^34-无效地址, 按https://en.bitcoin.it/wiki/Address算法，有效地址应该是4.29bill里有一个，大概应该是2^32有一个，所以最后有效数目大约是2^196)</p>
-<p>比特币地址开头为1</p>
-<p>长度为34个字符,但这个不一定，理论上可能会到27个，使用Public Key（压缩或者非压缩）生成,比如：</p>
+<p>比特币地址开头为1, 这个开头定义在的Base58.h的PUBKEY_ADDRESS，比特币定义为0，经过base58编码后对应开头为1，litecoin定义为48对应为L,定义与显示的对应关系可以查找https://en.bitcoin.it/wiki/List_of_address_prefixes</p>
+<p>比特币地址长度为34个字符,但这个不一定，理论上可能会到27个，使用Public Key（压缩或者非压缩）生成,比如：</p>
 <p>15atBQgsbyhr7BQtUMjwdEXSHNgbthydR1 (非压缩Public Key：04BAEC0655BAF2851E271553AB0F4DDAB793FD0CCC587F41E03D07186DB54C521B7AEB90426C719ACE734BB4957C72777610D36F22DF5F660B1DD7CBBD7594B13B)</p>
 <p>17FyT8NYV4Wf1DxrviCkpvVZ7i7bXx4rrx (压缩Public Key：03BAEC0655BAF2851E271553AB0F4DDAB793FD0CCC587F41E03D07186DB54C521B)</p>
 <p><a class="reference external" href="https://en.bitcoin.it/wiki/List_of_address_prefixes">https://en.bitcoin.it/wiki/List_of_address_prefixes</a></p>
@@ -143,13 +147,13 @@ Public Key (compressed, 66 characters [0-9A-F]):</div></blockquote>
 <div class="section" id="bitcoin">
 <h2><strong>Bitcoin地址计算过程</strong>:<a class="headerlink" href="#bitcoin" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>只包含0-9,A-F字符,分为缩和非压缩格式, 压缩格式33字节,以0x2或者0x3开头，非压缩65字节,以0x4开头,以04 &lt;x&gt; &lt;y&gt;的形式给出，x和y是表示曲线上点的坐标的32字节字符串, 最新版本默认使用压缩格式</p>
-<ol class="arabic">
+<div><ol class="arabic">
 <li><p class="first">产生ECDSA私钥，私钥是一个随机整数，公钥是私钥与基点的乘积,公钥产生后会有可靠性验证，防止攻击者利用性质较差的公钥进行攻击,避免偶然的编码或传输错误。使用性质较差的公钥会使其他安全措施无效(椭圆曲线数字签名算法（ECDSA）http://blog.sina.com.cn/s/blog_4e37c87d0100cuo0.html)如：</p>
 <p>18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725</p>
 </li>
 <li><p class="first">计算出ECDSA公钥，</p>
 <p>0450863AD64A87AE8A2FE8….82BA6</p>
+<p>public key只包含0-9,A-F字符,分为缩和非压缩格式, 压缩格式33字节,以0x2或者0x3开头，非压缩65字节,以0x4开头,以04 &lt;x&gt; &lt;y&gt;的形式给出，x和y是表示曲线上点的坐标的32字节字符串, 最新版本默认使用压缩格式</p>
 </li>
 <li><p class="first">对公钥进行SHA256运算</p>
 <p>600FFE422B4E00731A59557A5CCA46CC183944191006324A447BDB2D98D4B408</p>
@@ -436,9 +440,13 @@ Skipping item of <span class="nb">type </span>minversion
 <p><a class="reference external" href="https://en.bitcoin.it/wiki/Wallet_encryption">https://en.bitcoin.it/wiki/Wallet_encryption</a></p>
 <p>private key 加密
 Wallet encryption uses AES-256-CBC to encrypt only the private keys.</p>
+<p>钱包加密后, private key将以加密方式存储，每次使用的时候必须输入密码，解密的key不会在内存中缓存，除非你用命令
+walletpassphrase &lt;passphrase&gt; &lt;timeout&gt;</p>
 <p><a class="reference external" href="https://en.bitcoin.it/wiki/Wallet_encryption">https://en.bitcoin.it/wiki/Wallet_encryption</a></p>
 <p>钱包解密服务</p>
 <p><a class="reference external" href="http://www.walletrecoveryservices.com/">http://www.walletrecoveryservices.com/</a></p>
+<p>Recovering Bitcoin private keys using weak signatures from the blockchain</p>
+<p><a class="reference external" href="http://www.nilsschneider.net/2013/01/28/recovering-bitcoin-private-keys.html">http://www.nilsschneider.net/2013/01/28/recovering-bitcoin-private-keys.html</a></p>
 <p>一些脚本</p>
 <p><a class="reference external" href="http://pastebin.com/XWibUePh">http://pastebin.com/XWibUePh</a></p>
 <p><a class="reference external" href="http://pastebin.com/9MYBV9ve">http://pastebin.com/9MYBV9ve</a></p>
@@ -448,7 +456,10 @@ Wallet encryption uses AES-256-CBC to encrypt only the private keys.</p>
 <ul class="simple">
 <li>找零机制：</li>
 </ul>
-<p>为了保证隐私（匿名性）, 许多客户端默认设置（Armory, Electrum）每转出一笔钱就把剩下的自动转移到钱包里面新的一个地址名下</p>
+<p>为了保证隐私（匿名性）, 许多客户端默认设置（Bitcoin, Armory, Electrum）每转出一笔钱就把剩下的自动转移到钱包里面新的一个地址名下
+默认wallet.dat保留了100个地址，所以如果你备份后,进行了超过100次交易，然后恢复备份，有可能会丢币.</p>
+<p>详解比特币的找零机制</p>
+<p><a class="reference external" href="http://jingyan.baidu.com/article/19192ad84bcd54e53e570729.html">http://jingyan.baidu.com/article/19192ad84bcd54e53e570729.html</a></p>
 <ul class="simple">
 <li>导入导出</li>
 </ul>
@@ -527,6 +538,10 @@ Wallet encryption uses AES-256-CBC to encrypt only the private keys.</p>
 </div>
 <div class="section" id="id13">
 <h2>余额计算<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>注意通常来说，钱包里的余额并不在同一个地址</p>
+<p>getbalance
+getbalance &#8220;*&#8221;
+getbalance &#8220;label&#8221;</p>
 <dl class="docutils">
 <dt>计算方式1:</dt>
 <dd>Cwallet::getbalance() 遍历 wallet 里的交易，累计每一笔没有标记为spent的out</dd>
@@ -534,6 +549,8 @@ Wallet encryption uses AES-256-CBC to encrypt only the private keys.</p>
 <p>计算方式2:
 getbalance() 遍历所有wallet里的交易，分为sent 和received两个列表，分别汇总，然后sum(received) - sum(send) - sum(fee),结果应该和第一种相同</p>
 <p>余额 =  sum(TxOutToMe) - Sum(TxOutToOther) - fee</p>
+<p><a class="reference external" href="http://bitcoin.stackexchange.com/questions/10090/how-to-get-an-addresss-balance-with-the-bitcoin-client">http://bitcoin.stackexchange.com/questions/10090/how-to-get-an-addresss-balance-with-the-bitcoin-client</a></p>
+<p><a class="reference external" href="http://bitcoinmagazine.com/4465/bitcoin-developers-adding-0-007-minimum-transaction-output-size/">http://bitcoinmagazine.com/4465/bitcoin-developers-adding-0-007-minimum-transaction-output-size/</a></p>
 </div>
 <div class="section" id="id14">
 <h2>小技巧<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
@@ -545,6 +562,8 @@ getbalance() 遍历所有wallet里的交易，分为sent 和received两个列表
 <li>Convert exported key to a QR code</li>
 <li>print the code on a postcard</li>
 </ul>
+<p>余额合并
+<a class="reference external" href="https://www.wpsoftware.net/coinjoin/">https://www.wpsoftware.net/coinjoin/</a></p>
 </div>
 <div class="section" id="qa">
 <h2>QA<a class="headerlink" href="#qa" title="Permalink to this headline">¶</a></h2>
@@ -567,14 +586,10 @@ getbalance() 遍历所有wallet里的交易，分为sent 和received两个列表
 <li>正确, 一个私钥可以对应两个有效比特币地址</li>
 </ol>
 <ol class="upperalpha simple" start="17">
-<li>wallet 有那些限制， 存放多少交易？</li>
+<li>bitcoin 的钱包有那些限制， 存放多少交易？</li>
 </ol>
-<ol class="upperalpha">
-<li><p class="first">keypool=100
-only one account
-只能支持1个帐号，解决办法生成更多地址</p>
-<p><a class="reference external" href="https://bitcointalk.org/index.php?topic=5324.20">https://bitcointalk.org/index.php?topic=5324.20</a></p>
-</li>
+<ol class="upperalpha simple">
+<li>目前只能支持1个钱包，解决办法生成更多地址</li>
 </ol>
 </div>
 </div>
@@ -611,6 +626,9 @@ only one account
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">XCOIN tech 研究</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fee.html"
+                        title="next chapter">交易费计算</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -634,6 +652,9 @@ only one account
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="fee.html" title="交易费计算"
+             >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="XCOIN tech 研究"
              >previous</a> |</li>
