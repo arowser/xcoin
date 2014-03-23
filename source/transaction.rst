@@ -4,13 +4,19 @@
 
 交易在kevin的blog(648.io)中有很详细的描述.
  
-standard transaction types
 raw m-of-n where n<=3, p2sh, p2pkh, p2pk 
 
 p2sh: Pay To Script Hash 
 p2pkh: pay-to-pubkey-hash 
 p2pk:  pay-to-pubkey
 m-of-n:
+
+standard transaction types
+Pubkey
+Pubkey hash (P2PH)
+Script hash (P2SH)
+Multisig
+Null Data
 
 
 比特币交易构成（一）
@@ -24,6 +30,13 @@ http://618.io/blog/2013/10/27/bitcoin-transaction-02/
 Send coins to a 2-of-3 multisig, then spend them
 
 https://gist.github.com/gavinandresen/3966071 
+
+2-of-2 escrow example
+http://people.xiph.org/~greg/escrowexample.txt
+
+https://en.bitcoin.it/wiki/Atomic_cross-chain_trading
+
+http://bitcoindev.us.to/en/developer-guide#transactions
 
 multisig example
 
